@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, AlertTriangle, RefreshCw, FileText } from "lucide-react";
-import SignUpForm from './SignUpForm';
 import VictimsTable from './VictimsTable';
 
 interface QuizAnswer {
@@ -27,7 +26,6 @@ interface ResultsCardProps {
 
 const ResultsCard: React.FC<ResultsCardProps> = ({ answers, questions, onRestart }) => {
   const [victims, setVictims] = useState<any[]>([]);
-  const [showSignUpForm, setShowSignUpForm] = useState(true);
 
   const getAnswerDisplay = (questionId: string) => {
     const answer = answers.find(a => a.questionId === questionId)?.answer;
@@ -75,19 +73,14 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ answers, questions, onRestart
   const currentRisk = riskConfig[riskLevel];
   const RiskIcon = currentRisk.icon;
 
-  const handleSignUpSubmit = (userData: any) => {
-    setVictims(prev => [...prev, userData]);
-    setShowSignUpForm(false);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
       <div className="max-w-6xl mx-auto pt-8">
         {/* Header */}
         <div className="text-center mb-8">
           <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Анализ завершен</h1>
-          <p className="text-slate-600">Спасибо за предоставленную информацию</p>
+          <h1 className="text-3xl font-bold text-slate-800 mb-2">Регистрация завершена</h1>
+          <p className="text-slate-600">Вы успешно зарегистрированы в базе пострадавших</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -157,18 +150,13 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ answers, questions, onRestart
             </div>
           </div>
 
-          {/* Right Column - Sign Up Form or Victims Table */}
+          {/* Right Column - Success Message and Victims Table */}
           <div className="space-y-8">
-            {showSignUpForm ? (
-              <SignUpForm answers={answers} onSubmit={handleSignUpSubmit} />
-            ) : (
-              <div className="space-y-4">
-                <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                  <p className="text-green-800 font-medium">✓ Вы успешно зарегистрированы в базе пострадавших</p>
-                  <p className="text-green-700 text-sm mt-1">Наши специалисты свяжутся с вами в ближайшее время</p>
-                </div>
-              </div>
-            )}
+            <div className="p-6 bg-green-50 rounded-lg border border-green-200">
+              <CheckCircle className="h-8 w-8 text-green-600 mb-3" />
+              <h3 className="text-green-800 font-semibold mb-2">Регистрация успешно завершена!</h3>
+              <p className="text-green-700">Ваши данные добавлены в базу пострадавших. Наши специалисты свяжутся с вами в ближайшее время для дальнейшей работы по вашему случаю.</p>
+            </div>
             
             <VictimsTable victims={victims} />
           </div>
