@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,177 @@ interface ResultsCardProps {
 }
 
 const ResultsCard: React.FC<ResultsCardProps> = ({ answers, questions, onRestart }) => {
-  const [victims, setVictims] = useState<any[]>([]);
+  // Sample victims data based on the screenshots
+  const [victims] = useState([
+    {
+      name: "Шмидт Павел",
+      email: "schmidt.pavel@email.com",
+      phone: "+373 69 123 456",
+      additionalInfo: "Мошенничество через социальные сети",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Нечестные брокеры' },
+        { questionId: 'loss_amount', answer: '$1,000 - $5,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию', 'Обращался в банк'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций'] }
+      ],
+      submittedAt: "2024-05-15T10:30:00Z"
+    },
+    {
+      name: "Егоров Мартин",
+      email: "egorov.martin@email.com",
+      phone: "+371 26 987 654",
+      additionalInfo: "Инвестиционная пирамида",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Финансовые пирамиды' },
+        { questionId: 'loss_amount', answer: '$1,000 - $5,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался к юристам'] },
+        { questionId: 'evidence', answer: ['Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-05-12T14:20:00Z"
+    },
+    {
+      name: "Петров Мартин",
+      email: "petrov.martin@email.com",
+      phone: "+370 65 234 567",
+      additionalInfo: "Подозрительная криптовалютная биржа",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Биржи или обменные сервисы' },
+        { questionId: 'loss_amount', answer: '$5,000 - $15,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Подавал жалобы в регулирующие органы'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций'] }
+      ],
+      submittedAt: "2024-05-10T09:15:00Z"
+    },
+    {
+      name: "Schmidt Lukas",
+      email: "lukas.schmidt@email.com",
+      phone: "+49 176 345 678",
+      additionalInfo: "Крупное мошенничество с инвестициями",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Нечестные брокеры' },
+        { questionId: 'loss_amount', answer: 'Более $50,000' },
+        { questionId: 'loss_timeframe', answer: 'Менее месяца назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию', 'Обращался к юристам'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-05-20T16:45:00Z"
+    },
+    {
+      name: "Ким Сунхва",
+      email: "kim.sunhwa@email.com",
+      phone: "+7 777 123 456",
+      additionalInfo: "Мошенничество в мессенджере",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Мошенничество в мессенджерах или соц.сетях' },
+        { questionId: 'loss_amount', answer: '$1,000 - $5,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Ничего не предпринимал'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками'] }
+      ],
+      submittedAt: "2024-05-08T12:00:00Z"
+    },
+    {
+      name: "Новикова Ирина",
+      email: "irina.novikova@email.com",
+      phone: "+7 985 234 567",
+      additionalInfo: "Фальшивые инвестиции",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Финансовые пирамиды' },
+        { questionId: 'loss_amount', answer: '$5,000 - $15,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в банк'] },
+        { questionId: 'evidence', answer: ['Банковские выписки'] }
+      ],
+      submittedAt: "2024-05-05T11:30:00Z"
+    },
+    {
+      name: "Martinsson Vera",
+      email: "vera.martinsson@email.com",
+      phone: "+46 70 456 789",
+      additionalInfo: "Крупное мошенничество с акциями",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Нечестные брокеры' },
+        { questionId: 'loss_amount', answer: 'Более $50,000' },
+        { questionId: 'loss_timeframe', answer: 'Менее месяца назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию', 'Обращался к юристам', 'Подавал жалобы в регулирующие органы'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций', 'Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-05-22T08:20:00Z"
+    },
+    {
+      name: "Павлова Виктория",
+      email: "viktoria.pavlova@email.com",
+      phone: "+375 29 567 890",
+      additionalInfo: "Обман через фейковую платформу",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Биржи или обменные сервисы' },
+        { questionId: 'loss_amount', answer: '$5,000 - $15,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций'] }
+      ],
+      submittedAt: "2024-05-03T15:10:00Z"
+    },
+    {
+      name: "Harrison Liz",
+      email: "liz.harrison@email.com",
+      phone: "+61 4 234 567 89",
+      additionalInfo: "Мошенничество с криптовалютой",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Биржи или обменные сервисы' },
+        { questionId: 'loss_amount', answer: '$15,000 - $50,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался к юристам', 'Подавал жалобы в регулирующие органы'] },
+        { questionId: 'evidence', answer: ['Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-04-28T13:45:00Z"
+    },
+    {
+      name: "Johnson Emma",
+      email: "emma.johnson@email.com",
+      phone: "+44 20 7890 1234",
+      additionalInfo: "Инвестиционное мошенничество",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Нечестные брокеры' },
+        { questionId: 'loss_amount', answer: '$15,000 - $50,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию', 'Обращался к юристам'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-04-25T10:00:00Z"
+    },
+    {
+      name: "Smith John",
+      email: "john.smith@email.com",
+      phone: "+1 416 789 0123",
+      additionalInfo: "Крупное мошенничество с инвестициями",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Нечестные брокеры' },
+        { questionId: 'loss_amount', answer: 'Более $50,000' },
+        { questionId: 'loss_timeframe', answer: 'Менее месяца назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в полицию', 'Обращался к юристам', 'Подавал жалобы в регулирующие органы'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций', 'Банковские выписки', 'Документы/контракты'] }
+      ],
+      submittedAt: "2024-05-25T17:30:00Z"
+    },
+    {
+      name: "Garcia Maria",
+      email: "maria.garcia@email.com",
+      phone: "+34 6 1234 5678",
+      additionalInfo: "Мошенничество через социальные сети",
+      quizAnswers: [
+        { questionId: 'fraud_type', answer: 'Мошенничество в мессенджерах или соц.сетях' },
+        { questionId: 'loss_amount', answer: '$5,000 - $15,000' },
+        { questionId: 'loss_timeframe', answer: 'От 1 до 3 месяцев назад' },
+        { questionId: 'actions_taken', answer: ['Обращался в банк'] },
+        { questionId: 'evidence', answer: ['Переписка с мошенниками', 'Скриншоты транзакций'] }
+      ],
+      submittedAt: "2024-04-20T14:15:00Z"
+    }
+  ]);
 
   const getAnswerDisplay = (questionId: string) => {
     const answer = answers.find(a => a.questionId === questionId)?.answer;
