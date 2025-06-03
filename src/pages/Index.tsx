@@ -3,8 +3,91 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Users, AlertTriangle, FileSearch } from "lucide-react";
 import { Link } from "react-router-dom";
+import VictimsTable from "@/components/quiz/VictimsTable";
 
 const Index = () => {
+  // Sample victims data from the screenshots
+  const victimsData = [
+    {
+      name: "Шмидт Павел",
+      email: "pavel.schmidt@email.com",
+      phone: "+7 (999) 123-45-67",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Нечестные брокеры" },
+        { questionId: "loss_amount", answer: "Более $50,000" },
+        { questionId: "loss_timeframe", answer: "От 3 до 6 месяцев назад" },
+        { questionId: "actions_taken", answer: ["Обращался в полицию", "Обращался в банк"] },
+        { questionId: "evidence", answer: ["Переписка с мошенниками", "Банковские выписки"] }
+      ],
+      submittedAt: "2024-05-15T10:30:00Z"
+    },
+    {
+      name: "Егоров Мартин",
+      email: "martin.egorov@email.com",
+      phone: "+7 (988) 234-56-78",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Финансовые пирамиды" },
+        { questionId: "loss_amount", answer: "$15,000 - $50,000" },
+        { questionId: "loss_timeframe", answer: "От 1 до 3 месяцев назад" },
+        { questionId: "actions_taken", answer: ["Обращался к юристам"] },
+        { questionId: "evidence", answer: ["Документы/контракты", "Скриншоты транзакций"] }
+      ],
+      submittedAt: "2024-05-14T14:22:00Z"
+    },
+    {
+      name: "Schmidt Lukas",
+      email: "lukas.schmidt@email.de",
+      phone: "+49 151 123456789",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Биржи или обменные сервисы" },
+        { questionId: "loss_amount", answer: "$5,000 - $15,000" },
+        { questionId: "loss_timeframe", answer: "Менее месяца назад" },
+        { questionId: "actions_taken", answer: ["Подавал жалобы в регулирующие органы"] },
+        { questionId: "evidence", answer: ["Переписка с мошенниками", "Скриншоты транзакций"] }
+      ],
+      submittedAt: "2024-05-13T09:15:00Z"
+    },
+    {
+      name: "Петров Иван",
+      email: "ivan.petrov@email.ru",
+      phone: "+7 (977) 345-67-89",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Мошенничество в мессенджерах или соц.сетях" },
+        { questionId: "loss_amount", answer: "$1,000 - $5,000" },
+        { questionId: "loss_timeframe", answer: "От 6 месяцев до 1 года назад" },
+        { questionId: "actions_taken", answer: ["Обращался в банк", "Пытался связаться с мошенниками"] },
+        { questionId: "evidence", answer: ["Переписка с мошенниками"] }
+      ],
+      submittedAt: "2024-05-12T16:45:00Z"
+    },
+    {
+      name: "Miller Sarah",
+      email: "sarah.miller@email.com",
+      phone: "+1 555 987 6543",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Нечестные брокеры" },
+        { questionId: "loss_amount", answer: "Более $50,000" },
+        { questionId: "loss_timeframe", answer: "От 3 до 6 месяцев назад" },
+        { questionId: "actions_taken", answer: ["Обращался в полицию", "Обращался к юристам"] },
+        { questionId: "evidence", answer: ["Банковские выписки", "Документы/контракты"] }
+      ],
+      submittedAt: "2024-05-11T11:20:00Z"
+    },
+    {
+      name: "Козлов Дмитрий",
+      email: "dmitry.kozlov@email.ru",
+      phone: "+7 (966) 456-78-90",
+      quizAnswers: [
+        { questionId: "fraud_type", answer: "Финансовые пирамиды" },
+        { questionId: "loss_amount", answer: "$15,000 - $50,000" },
+        { questionId: "loss_timeframe", answer: "От 1 до 3 месяцев назад" },
+        { questionId: "actions_taken", answer: ["Подавал жалобы в регулирующие органы"] },
+        { questionId: "evidence", answer: ["Переписка с мошенниками", "Записи телефонных разговоров"] }
+      ],
+      submittedAt: "2024-05-10T13:35:00Z"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Hero Section */}
@@ -25,6 +108,11 @@ const Index = () => {
               Включить звук
             </Button>
           </div>
+        </div>
+
+        {/* Victims Table */}
+        <div className="mb-16">
+          <VictimsTable victims={victimsData} />
         </div>
 
         {/* Why Important Section */}
