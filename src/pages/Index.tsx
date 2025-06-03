@@ -1,11 +1,13 @@
-
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Users, AlertTriangle, FileSearch } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Shield, Users, AlertTriangle, FileSearch, ArrowLeft } from "lucide-react";
 import VictimsTable from "@/components/quiz/VictimsTable";
+import Quiz from "./Quiz";
 
 const Index = () => {
+  const [currentView, setCurrentView] = useState<'home' | 'quiz'>('home');
+
   // Sample victims data from the screenshots
   const victimsData = [
     {
@@ -88,6 +90,24 @@ const Index = () => {
     }
   ];
 
+  if (currentView === 'quiz') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="container mx-auto px-4 py-8">
+          <Button 
+            onClick={() => setCurrentView('home')}
+            variant="outline"
+            className="mb-4 flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Вернуться на главную
+          </Button>
+          <Quiz onComplete={() => setCurrentView('home')} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Hero Section */}
@@ -101,8 +121,12 @@ const Index = () => {
             Стали жертвой обмана? Проверьте, есть ли ваши данные в списках.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-slate-700 hover:bg-slate-800">
-              <Link to="/quiz">Проверить списки</Link>
+            <Button 
+              onClick={() => setCurrentView('quiz')}
+              size="lg" 
+              className="bg-slate-700 hover:bg-slate-800"
+            >
+              Проверить списки
             </Button>
             <Button variant="outline" size="lg">
               Включить звук
@@ -207,8 +231,12 @@ const Index = () => {
             а наши специалисты свяжутся с вами, чтобы обсудить возможные шаги по 
             возврату средств при наличии совпадений ваших данных в списках пострадавших.
           </p>
-          <Button asChild size="lg" className="bg-slate-700 hover:bg-slate-800">
-            <Link to="/quiz">Начать проверку</Link>
+          <Button 
+            onClick={() => setCurrentView('quiz')}
+            size="lg" 
+            className="bg-slate-700 hover:bg-slate-800"
+          >
+            Начать проверку
           </Button>
         </div>
       </div>
